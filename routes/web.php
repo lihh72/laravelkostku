@@ -45,3 +45,7 @@ Route::get('konfirmasi', function(){
 Route::get('konfirmasi2', function(){
     return view('konfirmasi2');
 });
+
+Route::get('admin/dashboard', function(){
+    return view('dashboard');
+});
