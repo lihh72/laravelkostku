@@ -169,7 +169,6 @@
         <button type="submit" class="login-btn">Masuk</button>
       </form>
       <p class="footer-text">Belum punya akun? <a href="register">Daftar</a> | <a href="index">Kembali ke Index</a></p>
-        <a href="demo.php">Akses Dengan Akun Demo</a>
     </div>
   </div>
 
