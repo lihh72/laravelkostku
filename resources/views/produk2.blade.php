@@ -14,7 +14,7 @@
         <a href="{{ url('index') }}" style="text-decoration: none; color: inherit;">KostKu</a>
     </div>
     <div class="search-bar">
-        <form action="search.html" method="get">
+        <form action="{{ url('search') }}" method="get">
             <input type="text" name="q" placeholder="Cari kos...">
             <button type="submit">Cari</button>
         </form>
