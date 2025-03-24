@@ -160,105 +160,99 @@
 </head>
 <body>
     <div class="container">
-    <header>
-    <div class="logo">
-        <a href="index" style="text-decoration: none; color: inherit;">KostKu</a>
-    </div>
+        <header>
+            <div class="logo">
+                <a href="index" style="text-decoration: none; color: inherit;">KostKu</a>
+            </div>
             <div class="search-bar">
                 <form action="search" method="get">
-                    <input 
-                        type="text" 
-                        name="q" 
-                        placeholder="Cari kos..." 
-                        value="<?= htmlspecialchars($query) ?>" 
-                        required>
+                    <input type="text" name="q" placeholder="Cari kos..." required>
                     <button type="submit">Cari</button>
                 </form>
             </div>
             <div class="actions">
-        <?php if ($is_logged_in): ?>
-            <div class="profile">
-                <a href="profile" class="profile-link">
-                <span class="profile-icon">👤</span>
-                <div class="profile-popup">
-                    <p><strong>Halo, <?= htmlspecialchars($username) ?></strong></p>
-                    <p>Email: <?= htmlspecialchars($_SESSION['email'] ?? 'Tidak tersedia') ?></p>
-                    <a href="logout.php" class="logout-btn">Logout</a>
-                </div>
+                <a href="login">Login</a>
+                <a href="register">Register</a>
             </div>
-        <?php else: ?>
-            <a href="login">Login</a>
-            <a href="register">Register</a>
-        <?php endif; ?>
-    </div>
-</header>
+        </header>
 
-<!-- Filter Section -->
-<div class="filter-container">
-    <button id="filter-btn">Filter</button>
-</div>
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <button id="filter-btn">Filter</button>
+        </div>
 
-<!-- Modal Filter -->
-<div id="filter-modal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h3>Filter</h3>
-        <form action="search" method="get">
-            <input type="hidden" name="q" value="<?= htmlspecialchars($query) ?>">
-            <div>
-                <label for="price_min">Harga Minimum:</label>
-                <input type="number" id="price_min" name="price_min" placeholder="Contoh: 1000000" value="<?= htmlspecialchars($price_min ?? '') ?>">
+        <!-- Modal Filter -->
+        <div id="filter-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h3>Filter</h3>
+                <form action="search" method="get">
+                    <div>
+                        <label for="price_min">Harga Minimum:</label>
+                        <input type="number" id="price_min" name="price_min" placeholder="Contoh: 1000000">
+                    </div>
+                    <div>
+                        <label for="price_max">Harga Maksimum:</label>
+                        <input type="number" id="price_max" name="price_max" placeholder="Contoh: 5000000">
+                    </div>
+                    <div class="facilities-container">
+                        <div class="facility-item">
+                            <label><input type="checkbox" name="facilities[]" value="AC"> AC</label>
+                        </div>
+                        <div class="facility-item">
+                            <label><input type="checkbox" name="facilities[]" value="Kamar Mandi Dalam"> Kamar Mandi Dalam</label>
+                        </div>
+                        <div class="facility-item">
+                            <label><input type="checkbox" name="facilities[]" value="Wi-Fi"> Wi-Fi</label>
+                        </div>
+                        <div class="facility-item">
+                            <label><input type="checkbox" name="facilities[]" value="Laundry"> Laundry</label>
+                        </div>
+                        <div class="facility-item">
+                            <label><input type="checkbox" name="facilities[]" value="Dapur Umum"> Dapur Umum</label>
+                        </div>
+                    </div>
+                    <button type="submit">Terapkan Filter</button>
+                </form>
             </div>
-            <div>
-                <label for="price_max">Harga Maksimum:</label>
-                <input type="number" id="price_max" name="price_max" placeholder="Contoh: 5000000" value="<?= htmlspecialchars($price_max ?? '') ?>">
-            </div>
-            <div class="facilities-container">
-    <div class="facility-item">
-        <label><input type="checkbox" name="facilities[]" value="AC" <?= in_array('AC', $filter_facilities) ? 'checked' : '' ?>> AC</label>
-    </div>
-    <div class="facility-item">
-        <label><input type="checkbox" name="facilities[]" value="Kamar Mandi Dalam" <?= in_array('Kamar Mandi Dalam', $filter_facilities) ? 'checked' : '' ?>> Kamar Mandi Dalam</label>
-    </div>
-    <div class="facility-item">
-        <label><input type="checkbox" name="facilities[]" value="Wi-Fi" <?= in_array('Wi-Fi', $filter_facilities) ? 'checked' : '' ?>> Wi-Fi</label>
-    </div>
-    <div class="facility-item">
-        <label><input type="checkbox" name="facilities[]" value="Laundry" <?= in_array('Laundry', $filter_facilities) ? 'checked' : '' ?>> Laundry</label>
-    </div>
-    <div class="facility-item">
-        <label><input type="checkbox" name="facilities[]" value="Dapur Umum" <?= in_array('Dapur Umum', $filter_facilities) ? 'checked' : '' ?>> Dapur Umum</label>
-    </div>
-</div>
-
-            <button type="submit">Terapkan Filter</button>
-        </form>
-    </div>
-</div>
-
-
+        </div>
 
         <!-- Search Results -->
         <div class="search-results">
             <h2>Hasil Pencarian</h2>
             <div class="listing">
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="card">
-                            <a href="produk/<?= urlencode($row['slug']) ?>" style="text-decoration: none; color: inherit;">
-                              <img src="proxy.php?url=https://owner.kostku.web.id/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
-
-                                <div class="info">
-                                    <h3><?= htmlspecialchars($row['name']) ?></h3>
-                                    <p><?= htmlspecialchars($row['description']) ?></p>
-                                    <span class="price">Rp <?= number_format($row['price'], 0, ',', '.') ?>/bulan</span>
-                                </div>
-                            </a>
+                <div class="card">
+                    <a href="produk/kos-mewah" style="text-decoration: none; color: inherit;">
+                        <img src="kos1.jpg" alt="Kos Mewah">
+                        <div class="info">
+                            <h3>Kos Mewah</h3>
+                            <p>Kos nyaman dengan fasilitas lengkap dan keamanan 24 jam.</p>
+                            <span class="price">Rp 2.000.000/bulan</span>
                         </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p>Tidak ada hasil untuk "<strong><?= htmlspecialchars($query) ?></strong>".</p>
-                <?php endif; ?>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <a href="produk/kos-ekonomis" style="text-decoration: none; color: inherit;">
+                        <img src="kos2.jpg" alt="Kos Ekonomis">
+                        <div class="info">
+                            <h3>Kos Ekonomis</h3>
+                            <p>Kos murah dengan fasilitas dasar, cocok untuk mahasiswa.</p>
+                            <span class="price">Rp 800.000/bulan</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <a href="produk/kos-elite" style="text-decoration: none; color: inherit;">
+                        <img src="kos3.jpg" alt="Kos Elite">
+                        <div class="info">
+                            <h3>Kos Elite</h3>
+                            <p>Kos premium dengan fasilitas hotel dan lokasi strategis.</p>
+                            <span class="price">Rp 3.500.000/bulan</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -267,8 +261,6 @@
             <p>&copy; 2024 KostKu. All rights reserved. <a href="#">Privacy Policy</a></p>
         </footer>
     </div>
-</body>
-</html>
 
     <script>
         const modal = document.getElementById('filter-modal');

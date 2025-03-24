@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kos Mewah - KostKu</title>
+    <title>Kos Ekonomis - KostKu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('styles2.css') }}">
 </head>
 <body>
+
 <header>
     <div class="logo">
         <a href="{{ url('index') }}" style="text-decoration: none; color: inherit;">KostKu</a>
     </div>
     <div class="search-bar">
-        <form action="search" method="get">
+        <form action="search.html" method="get">
             <input type="text" name="q" placeholder="Cari kos...">
             <button type="submit">Cari</button>
         </form>
@@ -28,11 +29,12 @@
     <div class="section">
         <div class="product">
             <div class="image-section">
-                <img class="main-image" src="{{ asset('kos1.jpg') }}" alt="Kos Mewah">
+                <img class="main-image" src="{{ asset('kos2.jpg') }}" alt="Kos Ekonomis">
             </div>
             <div class="details">
-                <h1>Kos Mewah</h1>
-                <p class="price">Rp 2.000.000/bulan</p>
+                <h1>Kos Ekonomis</h1>
+                <p class="price">Rp 800.000/bulan</p>
+
                 <div class="rent-button">
                     <button id="openModal">Mulai Penyewaan</button>
                 </div>
@@ -61,12 +63,10 @@
                 <div class="facilities-container">
                     <h3>Fasilitas:</h3>
                     <div class="facilities">
+                        <div class="facility-item">Kasur</div>
+                        <div class="facility-item">Lemari</div>
+                        <div class="facility-item">Kamar Mandi Bersama</div>
                         <div class="facility-item">WiFi</div>
-                        <div class="facility-item">AC</div>
-                        <div class="facility-item">Keamanan 24 Jam</div>
-                        <div class="facility-item">Dapur Bersama</div>
-                        <div class="facility-item">Parkir Luas</div>
-                        <div class="facility-item">Laundry</div>
                     </div>
                 </div>
             </div>
@@ -76,11 +76,14 @@
     <div class="section">
         <h3>Lokasi:</h3>
         <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.094110775233!2d115.21799881538427!3d-8.650913293793551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd240ef342af8ff%3A0xb3e9f57d58936cf2!2sBali%20Island!5e0!3m2!1sen!2sid!4v1616815604394!5m2!1sen!2sid" allowfullscreen=""></iframe>
+            <iframe src="https://maps.google.com/maps?q=jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen=""></iframe>
         </div>
 
         <h2>Deskripsi Lengkap</h2>
-        <p>Kos Mewah adalah pilihan terbaik bagi Anda yang mencari hunian nyaman dengan fasilitas lengkap. Terletak di lokasi strategis, kos ini dilengkapi dengan WiFi cepat, AC, keamanan 24 jam, dan parkir luas. Cocok untuk mahasiswa atau pekerja yang membutuhkan tempat tinggal dengan lingkungan nyaman dan akses mudah ke berbagai fasilitas umum.</p>
+        <p>
+            Kos Ekonomis adalah pilihan tepat bagi mahasiswa atau pekerja dengan budget terbatas. 
+            Menawarkan kamar sederhana dengan fasilitas dasar seperti kasur, lemari, WiFi, dan kamar mandi bersama.
+        </p>
     </div>
 </div>
 
@@ -88,56 +91,57 @@
     &copy; 2024 KostKu. All rights reserved.
 </footer>
 
+</body>
 <script>
-// Ambil elemen modal dan tombol
-var modal = document.getElementById("rentalModal");
-var openModalButton = document.getElementById("openModal");
-var closeModalButton = document.getElementById("closeModal");
-
-document.querySelector('form').addEventListener('submit', function(e) {
-    const rentalStartInput = document.getElementById('rental_start');
-    const selectedDate = new Date(rentalStartInput.value);
-    const today = new Date();
-
-    // Atur waktu untuk memastikan hanya membandingkan tanggal
-    today.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) {
-        e.preventDefault();
-        alert('Tanggal mulai tidak boleh sebelum hari ini.');
+    // Ambil elemen modal dan tombol
+    var modal = document.getElementById("rentalModal");
+    var openModalButton = document.getElementById("openModal");
+    var closeModalButton = document.getElementById("closeModal");
+    
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const rentalStartInput = document.getElementById('rental_start');
+        const selectedDate = new Date(rentalStartInput.value);
+        const today = new Date();
+    
+        // Atur waktu untuk memastikan hanya membandingkan tanggal
+        today.setHours(0, 0, 0, 0);
+        selectedDate.setHours(0, 0, 0, 0);
+    
+        if (selectedDate < today) {
+            e.preventDefault();
+            alert('Tanggal mulai tidak boleh sebelum hari ini.');
+        }
+    });
+    
+    // Ketika tombol "Mulai Penyewaan" diklik, buka modal
+    openModalButton.onclick = function() {
+        modal.classList.add("show");
+        modal.style.display = "block";
+        setTimeout(function() {
+            modal.style.opacity = "1";
+        }, 10);
     }
-});
-
-// Ketika tombol "Mulai Penyewaan" diklik, buka modal
-openModalButton.onclick = function() {
-    modal.classList.add("show");
-    modal.style.display = "block";
-    setTimeout(function() {
-        modal.style.opacity = "1";
-    }, 10);
-}
-
-// Ketika tombol close (X) diklik, tutup modal
-closeModalButton.onclick = function() {
-    modal.classList.remove("show");
-    modal.style.opacity = "0";
-    setTimeout(function() {
-        modal.style.display = "none";
-    }, 300);
-}
-
-// Ketika pengguna mengklik di luar modal, tutup modal
-window.onclick = function(event) {
-    if (event.target == modal) {
+    
+    // Ketika tombol close (X) diklik, tutup modal
+    closeModalButton.onclick = function() {
         modal.classList.remove("show");
         modal.style.opacity = "0";
         setTimeout(function() {
             modal.style.display = "none";
         }, 300);
     }
-}
-</script>
-
-</body>
-</html>
+    
+    // Ketika pengguna mengklik di luar modal, tutup modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.classList.remove("show");
+            modal.style.opacity = "0";
+            setTimeout(function() {
+                modal.style.display = "none";
+            }, 300);
+        }
+    }
+    </script>
+    
+    </body>
+    </html>
