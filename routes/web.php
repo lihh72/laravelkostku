@@ -21,3 +21,11 @@ Route::get('profile', function() {
 Route::get('register', function(){
     return view('register');
 });
+
+Route::get('produk', function(){
+    return view('produk');
+});
+
+Route::get('search', function(){
+    return view('search');
+});
