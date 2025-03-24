@@ -21,27 +21,3 @@ Route::get('profile', function() {
 Route::get('register', function(){
     return view('register');
 });
-
-Route::get('produk/kos-mewah', function(){
-    return view('produk');
-});
-
-Route::get('produk/kos-ekonomis', function(){
-    return view('produk2');
-});
-
-Route::get('produk/kos-elite', function(){
-    return view('produk2');
-});
-
-Route::get('search', function(){
-    return view('search');
-});
-
-Route::get('konfirmasi', function(){
-    return view('konfirmasi');
-});
-
-Route::get('konfirmasi2', function(){
-    return view('konfirmasi2');
-});
