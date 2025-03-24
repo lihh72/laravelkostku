@@ -13,3 +13,7 @@ Route::get('login', function() {
 Route::get('profile', function() {
     return view('profile');
 });
+
+Route::get('register', function(){
+    return view('register');
+});
